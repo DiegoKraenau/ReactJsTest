@@ -9,6 +9,9 @@ function App() {
     email: string;
     password: string;
     email_test: string;
+    person: {
+      name: string;
+    };
   }
 
   const schema = yup.object().shape({
@@ -24,6 +27,11 @@ function App() {
       .required("Ne ecesita un email")
       .min(4, "Email 4 letras min")
       .max(20, "Email 20 letras max"),
+    person: yup.object().shape({
+      name: yup.string().required(),
+    }),
+
+    // name: yup.string().required(),
   });
 
   const {
@@ -39,6 +47,8 @@ function App() {
   const formSubmitHandle: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
     console.log(data);
   };
+
+  console.log(watch("email"));
 
   return (
     <div className="center">
@@ -59,7 +69,7 @@ function App() {
           <br></br>
           <br></br>
           <Controller
-            name="email"
+            name="email_test"
             control={control}
             defaultValue="diegokraenau@gmail.com"
             render={({ field }) => (
@@ -69,6 +79,26 @@ function App() {
                 variant="outlined"
                 error={!!errors.email_test}
                 helperText={errors.email_test ? errors.email_test.message : ""}
+              ></TextField>
+            )}
+          />
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <Controller
+            name="person.name"
+            control={control}
+            defaultValue="d"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="text"
+                variant="outlined"
+                error={!!errors.person?.name}
+                helperText={
+                  errors.person?.name ? errors.person?.name.message : ""
+                }
               ></TextField>
             )}
           />
